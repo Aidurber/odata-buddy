@@ -3,7 +3,7 @@ import { buildSelect } from './select'
 import { buildOrderBy } from './order-by'
 import { buildFilter } from './filter'
 import { buildExpansion } from './expand'
-
+export * from './types'
 export function buildOdataQuery<T>(
 	schema: OData<T>,
 	expanding: boolean = false

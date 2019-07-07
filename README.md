@@ -1,6 +1,6 @@
-# OData-Client
+# OData Buddy 🤘
 
-OData Client is a utility for generating type-safe OData URLs. It's built in TypeScript so first-class TypeScript support is guaranteed.
+OData Buddy is a utility for generating type-safe OData URLs. It's built in TypeScript so first-class TypeScript support is guaranteed.
 
 **Note**
 This probably isn't production ready and doesn't cover advanced OData usage.
@@ -12,13 +12,13 @@ Install the package from NPM
 **NPM**
 
 ```bash
-npm install odata-client
+npm install odata-buddy
 ```
 
 **Yarn**
 
 ```bash
-yarn add odata-client
+yarn add odata-buddy
 ```
 
 ## Usage
@@ -38,7 +38,7 @@ interface SimpleModel {
 Select is an array of fields from the given model that you would like to select.
 
 ```typescript
-import { buildOdataQuery } from 'odata-client'
+import { buildOdataQuery } from 'odata-buddy'
 
 const odataUrl = buildOdataQuery<SimpleModel>({
 	select: ['id', 'name']
@@ -50,7 +50,7 @@ const odataUrl = buildOdataQuery<SimpleModel>({
 Order by is dictionary of properties from the given model, in this case the `name`, and the value is an `ODataSort` (imported alongside buildOdataQuery)
 
 ```typescript
-import { buildOdataQuery, ODataSort } from 'odata-client'
+import { buildOdataQuery, ODataSort } from 'odata-buddy'
 
 const odataUrl = buildOdataQuery<SimpleModel>({
 	orderBy: { name: ODataSort.Ascending }
@@ -62,7 +62,7 @@ const odataUrl = buildOdataQuery<SimpleModel>({
 Filter is a dictionary that takes an object with the operator and the value for the filter.
 
 ```typescript
-import { buildOdataQuery, ODataOperator } from 'odata-client'
+import { buildOdataQuery, ODataOperator } from 'odata-buddy'
 
 const odataUrl = buildOdataQuery<SimpleModel>({
 	filter: { id: { operator: ODataOperator.Equals, value: 10 } }

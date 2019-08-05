@@ -23,7 +23,7 @@ describe('OData', () => {
 			orderBy: { id: ODataSort.Descending, name: ODataSort.Ascending }
 		})
 
-		expect(result).toEqual('$orderBy=id desc,name asc')
+		expect(result).toEqual('$orderby=id desc,name asc')
 	})
 
 	it('should build filter equals', () => {
@@ -149,6 +149,6 @@ describe('OData', () => {
 			orderBy: { id: ODataSort.Descending, name: ODataSort.Ascending }
 		})
 
-		expect(result).toEqual('$select=id,name&$orderBy=id desc,name asc')
+		expect(result).toEqual('$select=id,name&$orderby=id desc,name asc')
 	})
 })

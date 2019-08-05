@@ -13,5 +13,5 @@ export function buildOrderBy<T>(orderBy: KeyedCollection<T, ODataSort>) {
 		(key: string) => `${key} ${orderBy![key as keyof T]}`
 	)
 
-	return `$orderBy=${orderByKeys}`
+	return `$orderby=${orderByKeys}`
 }

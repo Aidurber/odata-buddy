@@ -1,10 +1,15 @@
-import { buildOdataQuery } from '..'
+import { buildOdataQuery } from '../build-query'
 import { ODataSort, ODataOperator } from '../types'
 
 interface SimpleModel {
 	id: number
 	name: string
 	address: AddressModel
+}
+interface UppercaseSimpleModel {
+	Id: number
+	Name: string
+	Address: AddressModel
 }
 interface AddressModel {
 	line1: string
@@ -32,6 +37,13 @@ describe('OData', () => {
 		})
 
 		expect(result).toEqual('$filter=id eq 10')
+	})
+	it('should build filter equals case insensitive', () => {
+		const result = buildOdataQuery<UppercaseSimpleModel>({
+			filter: { Id: { operator: ODataOperator.Equals, value: 10 } }
+		})
+
+		expect(result).toEqual('$filter=Id eq 10')
 	})
 	it('should build filter greater than', () => {
 		const result = buildOdataQuery<SimpleModel>({

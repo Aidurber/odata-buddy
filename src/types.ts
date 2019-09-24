@@ -34,3 +34,5 @@ export interface OData<T = any> {
 	skip?: number
 	expand?: keyof T | KeyedCollection<any, OData<any>>
 }
+
+export type ToCase = 'as-is' | 'pascal' | 'camel'

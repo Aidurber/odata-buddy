@@ -1,4 +1,5 @@
-import { ValueKeys, KeyedCollection, ODataSort } from './types'
+import { KeyedCollection, ODataSort, ToCase } from './types'
+import { convertToCase } from './utils'
 
 /**
  * Build order by query
@@ -8,9 +9,12 @@ import { ValueKeys, KeyedCollection, ODataSort } from './types'
  * @param {KeyedCollection<T, ODataSort>} orderBy
  * @returns
  */
-export function buildOrderBy<T>(orderBy: KeyedCollection<T, ODataSort>) {
+export function buildOrderBy<T>(
+	orderBy: KeyedCollection<T, ODataSort>,
+	casing: ToCase
+) {
 	const orderByKeys = Object.keys(orderBy).map(
-		(key: string) => `${key} ${orderBy![key as keyof T]}`
+		(key: string) => `${convertToCase(key, casing)} ${orderBy![key as keyof T]}`
 	)
 
 	return `$orderby=${orderByKeys}`

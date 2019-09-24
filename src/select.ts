@@ -1,4 +1,5 @@
-import { ValueKeys } from './types'
+import { ValueKeys, ToCase } from './types'
+import { convertToCase } from './utils'
 
 /**
  * Build select query
@@ -8,6 +9,7 @@ import { ValueKeys } from './types'
  * @param {ValueKeys<T>} select
  * @returns
  */
-export function buildSelect<T>(select: ValueKeys<T>) {
-	return `$select=${select.join(',')}`
+export function buildSelect<T>(select: ValueKeys<T>, casing: ToCase) {
+	const values = convertToCase(select as string[], casing) as string[]
+	return `$select=${values.join(',')}`
 }

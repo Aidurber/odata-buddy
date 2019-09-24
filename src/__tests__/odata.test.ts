@@ -163,4 +163,86 @@ describe('OData', () => {
 
 		expect(result).toEqual('$select=id,name&$orderby=id desc,name asc')
 	})
+
+	describe('Casing', () => {
+		interface CamelCaseModel {
+			userId: number
+			userName: string
+			payload: {
+				id: number
+			}
+		}
+		interface TitleCaseModel {
+			UserId: number
+			UserName: string
+			Payload: {
+				Id: number
+			}
+		}
+
+		it('should change the correct case', () => {
+			const camelResult = buildOdataQuery<TitleCaseModel>(
+				{
+					select: ['UserId', 'UserName'],
+					orderBy: {
+						UserName: ODataSort.Descending
+					},
+					expand: 'UserId',
+					filter: {
+						UserId: {
+							operator: ODataOperator.Equals,
+							value: true
+						}
+					}
+				},
+				'camel'
+			)
+			expect(camelResult).toEqual(
+				'$select=userId,userName&$orderby=userName desc&$filter=userId eq true&$expand=userId'
+			)
+			const titleResult = buildOdataQuery<CamelCaseModel>(
+				{
+					select: ['userId', 'userName'],
+					orderBy: {
+						userName: ODataSort.Descending
+					},
+					expand: 'userId',
+					filter: {
+						userId: {
+							operator: ODataOperator.Equals,
+							value: true
+						}
+					}
+				},
+				'pascal'
+			)
+			expect(titleResult).toEqual(
+				'$select=UserId,UserName&$orderby=UserName desc&$filter=UserId eq true&$expand=UserId'
+			)
+		})
+		it('should change the advanced expansion case', () => {
+			const camelResult = buildOdataQuery<TitleCaseModel>(
+				{
+					expand: {
+						Payload: {
+							select: ['Id']
+						}
+					}
+				},
+				'camel'
+			)
+			expect(camelResult).toEqual('$expand=payload($select=id)')
+			const titleResult = buildOdataQuery<CamelCaseModel>(
+				{
+					expand: {
+						payload: {
+							select: ['id']
+						}
+					}
+				},
+				'pascal'
+			)
+			expect(titleResult).toEqual('$expand=Payload($select=Id)')
+		})
+	})
 })

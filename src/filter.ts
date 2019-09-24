@@ -1,4 +1,5 @@
-import { KeyedCollection, ODataOperator } from './types'
+import { KeyedCollection, ODataOperator, ToCase } from './types'
+import { convertToCase } from './utils'
 
 /**
  * Filter type
@@ -34,7 +35,8 @@ export interface LogicalFilter<T> extends Filter<T> {
  * @returns {string[]}
  */
 export function buildFilter<T>(
-	filter: KeyedCollection<T, Filter<T>>
+	filter: KeyedCollection<T, Filter<T>>,
+	casing: ToCase
 ): string[] {
 	const filters: string[] = []
 	for (let key in filter) {
@@ -45,11 +47,13 @@ export function buildFilter<T>(
 
 		// Work recursively
 		if (value.value.hasOwnProperty('operator')) {
-			filters.concat(buildFilter<T>(value.value as any))
+			filters.concat(buildFilter<T>(value.value as any, casing))
 			continue
 		}
 
-		let filterValue = `${key} ${value.operator} ${value.value}`
+		let filterValue = `${convertToCase(key, casing)} ${value.operator} ${
+			value.value
+		}`
 
 		if (value.and) {
 			filterValue += buildLogicalFilter('and', value.and)

@@ -8,6 +8,10 @@
 		"email": "aidurber@gmail.com",
 		"url": "https://github.com/aidurber"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Aidurber/odata-buddy.git"
+	},
 	"license": "MIT",
 	"scripts": {
 		"test": "jest",
